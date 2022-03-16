@@ -7,18 +7,17 @@
 <form method="post" action="<?php echo base_url('products/create');?>" enctype="multipart/form-data" id="sbmt-frm" >
   <label for="name">Name:</label><br>
   <input type="text" id="name" value="" name="name" ><br>
-  <?php
-  if(!empty($form_errors)){
-echo($form_errors['name']); }?><br>
+
+  <div class="name_error all_errors"></div>
+<br>
   <label for="email">Email:</label><br>
- 
   <input type="text" id="email" value="" name="email"><br>
-   <?php
-  if(!empty($form_errors)){
-echo($form_errors['email']); }?>
+<div class="email_error all_errors"></div>
 <br> 
-	
+	  
 	<input type="file" name="userfile"  />
+<div class="image_error all_errors"></div>
+
 
   <input type="submit" value="Submit">
 </form> 
@@ -30,7 +29,7 @@ echo($form_errors['email']); }?>
   $(document).on('submit', '#sbmt-frm', function (e) {
     e.preventDefault();
     var formObj = $(this);
-    // $('.all_errors').empty();
+    $('.all_errors').empty();
     // $('.direct_access_error').hide();
     $.ajax({
       url: "<?php echo base_url("products/create");?>",
@@ -40,12 +39,13 @@ echo($form_errors['email']); }?>
        contentType: false,
       processData: false,
       success: function (data) {
-        console.log(data);
+        console.log(data.image_errors);
         if (data.response == true) {
           location.href = base_url + data.redirect_url;
-        } else if (data.errors) {
-          errors(data.errors);
-          $('.password_error').html(data.password_error);
+        } else if(data.response == false){
+                    $('.name_error').html(data.form_errors.name);
+                    $('.email_error').html(data.form_errors.email);     
+          $('.image_error').html(data.image_errors);
         }
       }
     });

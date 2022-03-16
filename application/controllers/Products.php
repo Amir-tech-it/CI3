@@ -52,7 +52,7 @@ $data['image_errors'] ="";
    		$this->load->view('pro',$data); 
 
    	}
-   	else{
+   	else{ 
 
       if(!empty($_FILES['userfile']['tmp_name'])){
          $config['upload_path'] = './assets/uploads/';
