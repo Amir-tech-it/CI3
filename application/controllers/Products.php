@@ -39,61 +39,64 @@ public function dashboard(){
    public function create(){
     $data= [];
     $data['response'] = false;
-$formdata = $this->input->post();
+    $data['image_errors'] ="";
+    $formdata = $this->input->post();
 
-if(!$this->input->is_ajax_request()) {
-      exit('No direct script access allowed');
+    if(!$this->input->is_ajax_request()) {
+        exit('No direct script access allowed');
     }
-$data['image_errors'] ="";
+
+    if(empty($_FILES['userfile']['tmp_name'])){
+      $this->form_validation->set_rules('userfile','Image','required');
+    }
+
    	$this->form_validation->set_rules('name','Name','required');
-   		$this->form_validation->set_rules('email','Email','required|valid_email');
+   	$this->form_validation->set_rules('email','Email','required|valid_email');
    	if($this->form_validation->run() == false){
       $data['form_errors'] = $this->form_validation->error_array();
-   		$this->load->view('pro',$data); 
-
-   	}
-   	else{ 
+   		// $this->load->view('pro',$data); 
+   	}else { 
 
       if(!empty($_FILES['userfile']['tmp_name'])){
-         $config['upload_path'] = './assets/uploads/';
-$config['allowed_types'] = 'gif|jpg|png';
-$config['max_size'] = 10000;
-      $config['max_height'] = 3000;
-      $config['max_width'] = 3000;
-      $config['overwrite'] = true;
- $this->load->library('upload', $config);
+        $config['upload_path'] = './assets/uploads/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = 10000;
+        $config['max_height'] = 3000;
+        $config['max_width'] = 3000;
+        $config['overwrite'] = true;
+        $this->load->library('upload', $config);
 
-      if(!$this->upload->do_upload('userfile')){
-        $data['image_errors'] = $this->upload->display_errors();
-      }else {
-        $formdata['image'] = $this->upload->data('file_name');
+        if(!$this->upload->do_upload('userfile')){
+          $data['image_errors'] = $this->upload->display_errors();
+        }else {
+          $formdata['image'] = $this->upload->data('file_name');
+        }
       }
-    }
 
 
    	/// create user and save to database
-     
+      
 
    		// $data['name'] = $this->input->post('name');
    		// $data['email'] = $this->input->post('email');
    		// $data['created'] = date('Y-m-d');
-     if(empty($data['image_errors'])){
-
-
-            $response=$this->pmodel->saverecords($formdata);
-      if($response==true){
-        $data['redirect_url'] = "dashboard";
-        $data['succes']  = "Added Successfully!";
-      }
-      else{
-         echo "not added ";
-      }
-    }
+        if(empty($data['image_errors'])){
+         $response=$this->pmodel->saverecords($formdata);
+          if($response==true){
+            $data['response'] = true;
+            $data['redirect_url'] = "dashboard";
+            $data['success']  = "Added Successfully!";
+          }
+        } 
+      // else{
+      //    echo "not added ";
+      // }
+    
    		// $this->Pmodel->create($formarray);
    		// $this->session->set_flashdata('Success','Your data added successfully');
    		
    	}
-echo json_encode($data);
+    echo json_encode($data);
     exit;
    }
 

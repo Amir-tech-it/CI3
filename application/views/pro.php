@@ -5,6 +5,8 @@
 <h2>HTML Forms</h2>
 
 <form method="post" action="<?php echo base_url('products/create');?>" enctype="multipart/form-data" id="sbmt-frm" >
+<div class="successmsg"></div>
+
   <label for="name">Name:</label><br>
   <input type="text" id="name" value="" name="name" ><br>
 
@@ -16,8 +18,8 @@
 <br> 
 	  
 	<input type="file" name="userfile"  />
-<div class="image_error all_errors"></div>
-
+<div class="userfile_error all_errors"></div>
+ 
 
   <input type="submit" value="Submit">
 </form> 
@@ -33,20 +35,29 @@
     // $('.direct_access_error').hide();
     $.ajax({
       url: "<?php echo base_url("products/create");?>",
-    data: new FormData(this),
+      data: new FormData(this),
       type: "POST",
       dataType: "JSON",
        contentType: false,
       processData: false,
       success: function (data) {
-        console.log(data.image_errors);
+         console.log(data);
         if (data.response == true) {
-          location.href = base_url + data.redirect_url;
-        } else if(data.response == false){
-                    $('.name_error').html(data.form_errors.name);
-                    $('.email_error').html(data.form_errors.email);     
-          $('.image_error').html(data.image_errors);
+           $('.successmsg').html(data.success);
+           // location.href = base_url + data.redirect_url;
+        } else {
+          if(data.image_errors){
+            $('.userfile_error').html(data.image_errors);
+          }
+          if(data.form_errors){
+            errors(data.form_errors);
+          }
         }
+        // else if (data.response == false){
+        //             $('.name_error').html(data.form_errors.name);
+        //             $('.email_error').html(data.form_errors.email);     
+        //   $('.image_error').html(data.image_errors);
+        // }
       }
     });
   });
