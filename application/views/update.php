@@ -16,7 +16,7 @@
   <input type="text" id="email" value="<?php echo $row->email;?>" name="email"><br>
   <div class="email_error all_errors"></div>
 <br> 
-<!-- <img src="" alt="<?php echo $row->image;?>" width="500" height="600">  -->
+ <img src="<?php echo base_url().'/assets/uploads/'.$row->image; ?>" alt="<?php echo $row->image;?>" width="100" height="100">  
  <input type="file" name="userfile" value="<?php echo $row->image;?>" />
 <div class="userfile_error all_errors"></div>
 
