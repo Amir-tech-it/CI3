@@ -51,6 +51,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <body>
 
 
+<a href="http://localhost/CI3/products/login_view">login</a><br><br>
+<a href="http://localhost/CI3/products/hopage">View</a><br><br>
+<a href="http://localhost/CI3/products">register</a><br><br>
 
 <form class="form-inline" id="login-frm">
   <label for="email">Email:</label>

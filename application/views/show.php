@@ -21,7 +21,7 @@ tr:nth-child(even) {
 }
 </style>
 <body>
-  <a href="http://localhost/CI3/products/">Home</a><br><br>
+  <a href="http://localhost/CI3/products/hopage">Home</a><br><br>
 <table>
   <tr>
     <th>Company</th>
