@@ -16,7 +16,10 @@
   <input type="text" id="email" value="<?php echo $row->email;?>" name="email"><br>
   <div class="email_error all_errors"></div>
 <br> 
- <img src="<?php echo base_url().'/assets/uploads/'.$row->image; ?>" alt="<?php echo $row->image;?>" width="100" height="100">  
+ <img src="<?php echo base_url().'/assets/uploads/'.$row->image; ?>" alt="<?php echo $row->image;?>" width="100" height="100">  <br>
+ <?php echo $row->image;?>
+<br>
+<span>Select New Image</span>
  <input type="file" name="userfile" value="<?php echo $row->image;?>" />
 <div class="userfile_error all_errors"></div>
 
