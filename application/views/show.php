@@ -26,6 +26,7 @@ tr:nth-child(even) {
   <tr>
     <th>Company</th>
     <th>Contact</th>
+    <th>Image</th>
     <th>Edit</th>
   </tr>
  <?php
@@ -34,6 +35,7 @@ tr:nth-child(even) {
   <tr>
   <td><?php echo $row->name;?></td>
   <td><?php echo $row->email;?></td>
+  <td><img src="<?php echo base_url().'/assets/uploads/'.$row->image; ?>" style="height:100px;width:100px;" class="img-responsive"></td>
   <td><a href="http://localhost/CI3/products/edit?edit=<?php echo $row->id; ?>">Edit</a>&nbsp<a href="http://localhost/CI3/products/delete?del=<?php echo $row->id; ?>">Delete</a></td>
  </tr>
  <?php
