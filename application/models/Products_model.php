@@ -6,12 +6,16 @@ class Products_model extends CI_Model {
         $this->db->insert('prodetails',$formdata);
         return true;
 	}
-  
+	function register_user($formdata)
+	{
+        $this->db->insert('users',$formdata);
+        return true;
+	}
 	function showdata(){
 		 $query=$this->db->get("prodetails");
     return $query->result();
 	}
-
+  
 	function showdatabyid($id){
 		 
 		 $this->db->where('id',$id);
