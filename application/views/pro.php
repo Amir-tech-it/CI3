@@ -6,7 +6,7 @@
 
 <form method="post" action="<?php echo base_url('products/create');?>" enctype="multipart/form-data" id="sbmt-frm" >
 <div class="successmsg"></div>
-
+ 
   <label for="name">Name:</label><br>
   <input type="text" id="name" value="" name="name" ><br>
 

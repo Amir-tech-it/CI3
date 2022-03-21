@@ -37,101 +37,32 @@ public function dashboard(){
   }
 
 
-  public function register12324(){
+   public function register(){
     $data= [];
     $data['response'] = false;
     // $data['image_errors'] ="";
     $formdata = $this->input->post();
-
+    // echo $formdata;
     if(!$this->input->is_ajax_request()) {
         exit('No direct script access allowed');
     }
-
-   
-
-   	$this->form_validation->set_rules('email','Email','required');
-   	$this->form_validation->set_rules('psw','Password','required');
-     $this->form_validation->set_rules('psw-repeat', 'Password Confirmation', 'required|matches[psw]');
-   	if($this->form_validation->run() == false){
-      $data['form_errors'] = $this->form_validation->error_array();
-   		 $this->load->view('pro',$data); 
-   	 }
-         $response=$this->pmodel->register_user($formdata);
-          if($response==true){
-            $data['response'] = true;
-            $data['redirect_url'] = "dashboard";
-            $data['success']  = "Registered Successfully!";
-          }
-        
-      
-   		
-   	
-    echo json_encode($data);
-    exit;
-   }
-
-
-   public function register(){
-    $data= [];
-    $data['response'] = false;
-    $data['image_errors'] ="";
-    $formdata = $this->input->post();
-
-    if(!$this->input->is_ajax_request()) {
-        exit('No direct script access allowed');
-    }
-
-    if(empty($_FILES['userfile']['tmp_name'])){
-      $this->form_validation->set_rules('userfile','Image','required');
-    }
-
     $this->form_validation->set_rules('email','Email','required');
     $this->form_validation->set_rules('psw','Password','required');
     $this->form_validation->set_rules('psw-repeat', 'Password Confirmation', 'required|matches[psw]');
    	if($this->form_validation->run() == false){
       $data['form_errors'] = $this->form_validation->error_array();
-   		// $this->load->view('pro',$data); 
-   	}else { 
-
-      if(!empty($_FILES['userfile']['tmp_name'])){
-        $config['upload_path'] = './assets/uploads/';
-        $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_size'] = 10000;
-        $config['max_height'] = 3000;
-        $config['max_width'] = 3000;
-        $config['overwrite'] = true;
-        $this->load->library('upload', $config);
-
-        if(!$this->upload->do_upload('userfile')){
-          $data['image_errors'] = $this->upload->display_errors();
-        }else {
-          $formdata['image'] = $this->upload->data('file_name');
-        }
-      }
-
-
-   	/// create user and save to database
-      
-
-   		// $data['name'] = $this->input->post('name');
-   		// $data['email'] = $this->input->post('email');
-   		// $data['created'] = date('Y-m-d');
-        if(empty($data['image_errors'])){
-         $response=$this->pmodel->saverecords($formdata);
+   		$this->load->view('signup',$data); 
+   	}
+     else { 
+         $response=$this->pmodel->register_user($formdata);
           if($response==true){
             $data['response'] = true;
+            // echo'okk';
+            // exit;
             $data['redirect_url'] = "dashboard";
             $data['success']  = "Added Successfully!";
           }
-        } 
-      // else{
-      //    echo "not added ";
-      // }
-    
-   		// $this->Pmodel->create($formarray);
-   		// $this->session->set_flashdata('Success','Your data added successfully');
-   		
-   	}
+        }
     echo json_encode($data);
     exit;
    }
@@ -251,5 +182,13 @@ if($updateresponse==true){
           echo "Not deleted";
       }
      }
+  
+
+public function login_view(){
+  $this->load->view('login');
+  
+  
+}
+
 
 }
