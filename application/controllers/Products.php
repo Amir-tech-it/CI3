@@ -7,6 +7,7 @@ public function __construct(){
 
     parent::__construct();
     $this->load->model('products_model', 'pmodel');
+    $this->load->library('session');
 
  
   }  
@@ -275,11 +276,16 @@ public function dashboard(){
       }
      }
   
+     public function login(){
+      
+      
+     }
+
+
+
 
 public function login_view(){
-  $this->load->view('login');
-  
-  
+  $this->load->view('login'); 
 }
 
 
