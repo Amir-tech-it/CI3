@@ -7,6 +7,7 @@ public function __construct(){
 
     parent::__construct();
     $this->load->model('products_model', 'pmodel');
+     $this->load->model('admin_model', 'admin');
     $this->load->library('session');
 
  
@@ -36,9 +37,14 @@ public function __construct(){
     $this->load->view('pro'); 
    }
 
-public function dashboard(){  
-  
-      $this->load->view('welcome'); 
+public function dashboard(){
+
+    if($this->session->has_userdata('admin_email')){
+      $this->load->view('admin/dashboard');
+    }else {
+      $this->session->set_flashdata('direct_access_error', 'Please Login First For Dashboard Access!');
+      // redirect('admin');
+    }
 
   }
 
@@ -164,35 +170,35 @@ public function dashboard(){
 
 
 
-  //  public function updateajax12345(){
-  //   $data= [];
-  //   $data['response'] = false;
-  //   // $data['image_errors'] ="";
-  //   $formdata = $this->input->post();
-  //   $id = $formdata['id'];
-  //   unset($formdata['id']);
-  //   // echo $formdata;
-  //   if(!$this->input->is_ajax_request()) {
-  //       exit('No direct script access allowed');
-  //   }
-  //   $this->form_validation->set_rules('name','Name','required');
-  //  	$this->form_validation->set_rules('email','Email','required|valid_email');
-  //  	if($this->form_validation->run() == false){
-  //     $data['form_errors'] = $this->form_validation->error_array();
-  //  		$this->load->view('update',$data); 
-  //  	}
-  //    else { 
-  //        $response=$this->pmodel->updaterecord($formdata,$id);
-  //         if($response==true){
-  //           $data['response'] = true;
+   // public function updateajax12345(){
+   //  $data= [];
+   //  $data['response'] = false;
+   //  // $data['image_errors'] ="";
+   //  $formdata = $this->input->post();
+   //  $id = $formdata['id'];
+   //  unset($formdata['id']);
+   //  // echo $formdata;
+   //  if(!$this->input->is_ajax_request()) {
+   //      exit('No direct script access allowed');
+   //  }
+   //  $this->form_validation->set_rules('name','Name','required');
+   // 	$this->form_validation->set_rules('email','Email','required|valid_email');
+   // 	if($this->form_validation->run() == false){
+   //    $data['form_errors'] = $this->form_validation->error_array();
+   // 		$this->load->view('update',$data); 
+   // 	}
+   //   else { 
+   //       $response=$this->pmodel->updaterecord($formdata,$id);
+   //        if($response==true){
+   //          $data['response'] = true;
             
-  //           $data['redirect_url'] = "dashboard";
-  //           $data['success']  = "Updated Successfully!";
-  //         }
-  //       }
-  //   echo json_encode($data);
-  //   exit;
-  //  }
+   //          $data['redirect_url'] = "dashboard";
+   //          $data['success']  = "Updated Successfully!";
+   //        }
+   //      }
+   //  echo json_encode($data);
+   //  exit;
+   // }
 
 
 
@@ -277,7 +283,47 @@ public function dashboard(){
      }
   
      public function login(){
-      
+
+    $data= [];
+    $data['response'] = false;
+    // $data['image_errors'] ="";
+    $formdata = $this->input->post();
+    $email = $formdata['email'];
+    $password = $formdata['psw'];
+    
+     // print_r($password) ;
+     // exit;
+    if(!$this->input->is_ajax_request()) {
+        exit('No direct script access allowed');
+    }
+    $this->form_validation->set_rules('email','Email','required|valid_email');
+    $this->form_validation->set_rules('psw','Password','required');
+    
+    if($this->form_validation->run() == false){
+      $data['form_errors'] = $this->form_validation->error_array();
+      // $this->load->view('update',$data); 
+    }
+     else { 
+            $where = "users.email='".$email."' AND users.psw='".$password."'";
+      $results = $this->admin->get_where('*', $where, true, '', '1', '');
+         if(!empty($results)){
+        $data['response'] = true;
+        $data['redirect_url'] = "dashboard";
+        $data['success']  = "updated Successfully!";
+        $sessionData = array(
+          'admin_email' => $results[0]['email'],
+          'admin_id' => $results[0]['id']
+        );
+        $this->session->set_userdata($sessionData);
+      }else{
+        $data['password_error'] = 'Incorrect Password!';
+      }
+
+        
+        }
+    echo json_encode($data);
+    exit;
+   
       
      }
 
