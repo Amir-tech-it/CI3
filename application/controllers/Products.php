@@ -39,7 +39,12 @@ public function __construct(){
 
 public function dashboard(){
 
-    if($this->session->has_userdata('admin_email')){
+    if(
+
+      $session123 =  $this->session->has_userdata('admin_email')
+
+     ){
+      // print_r($session123);
       $this->load->view('admin/dashboard');
     }else {
       $this->session->set_flashdata('direct_access_error', 'Please Login First For Dashboard Access!');
@@ -312,9 +317,10 @@ public function dashboard(){
         $data['success']  = "updated Successfully!";
         $sessionData = array(
           'admin_email' => $results[0]['email'],
-          'admin_id' => $results[0]['id']
+          'admin_id' => $results[0]['user_id']
         );
-        $this->session->set_userdata($sessionData);
+      $set_sesion =  $this->session->set_userdata($sessionData);
+      
       }else{
         $data['password_error'] = 'Incorrect Password!';
       }
