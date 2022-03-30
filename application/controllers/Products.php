@@ -58,7 +58,7 @@ public function dashboard(){
     $data= [];
     $data['response'] = false;
     // $data['image_errors'] ="";
-    $formdata = $this->input->post();
+   
     // echo $formdata;
     if(!$this->input->is_ajax_request()) {
         exit('No direct script access allowed');
@@ -66,14 +66,31 @@ public function dashboard(){
     $this->form_validation->set_rules('email','Email','required');
     $this->form_validation->set_rules('psw','Password','required');
     $this->form_validation->set_rules('psw-repeat', 'Password Confirmation', 'required|matches[psw]');
+
    	if($this->form_validation->run() == false){
       $data['form_errors'] = $this->form_validation->error_array();
    		$this->load->view('signup',$data); 
    	}
      else { 
-         $response=$this->pmodel->register_user($formdata);
+       $formdata = $this->input->post();
+          unset($formdata['psw-repeat']);
+          $password = $formdata['psw'];
+          unset($formdata['psw']);
+          $formdata['psw'] = md5($password);
+          print_r($formdata['psw']);
+          exit;
+           $response=$this->pmodel->register_user($formdata);
           if($response==true){
-            $data['response'] = true;
+            
+ 
+        // $name = 'Dear '.$formData['username'];
+                 $message = 'Your login Credentials are given below.<br/>';
+                $message .= 'Email: '.$formdata['email'];
+                $message .= '<br/>Password: '.$password;
+              // $message .= '<br/> Please follow below link for login.<br/>';
+              //   $message .= "<br/>Regards,<br/>Administration of Uflow";
+                send_email_to($formData['email'],$message,'Login Credentials');
+$data['response'] = true;
             // echo'okk';
             // exit;
             $data['redirect_url'] = "dashboard";
