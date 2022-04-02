@@ -54,4 +54,5 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['default_controller'] = "products/index";
 $route['dashboard'] = 'products/dashboard';
+$route['user_dashboard'] = 'products/user_dashboard';
  

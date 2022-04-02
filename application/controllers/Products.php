@@ -53,7 +53,21 @@ public function dashboard(){
 
   }
 
+public function user_dashboard(){
 
+    if(
+
+      $session124 =  $this->session->has_userdata('admin_email')
+
+     ){
+      // print_r($session123);
+      $this->load->view('admin/user_dashboard');
+    }else {
+      $this->session->set_flashdata('direct_access_error', 'Please Login First For Dashboard Access!');
+      // redirect('admin');
+    }
+
+  }
    public function register(){
     $data= [];
     $data['response'] = false;
@@ -67,6 +81,7 @@ public function dashboard(){
     $this->form_validation->set_rules('psw','Password','required');
     $this->form_validation->set_rules('psw-repeat', 'Password Confirmation', 'required|matches[psw]');
 
+
    	if($this->form_validation->run() == false){
       $data['form_errors'] = $this->form_validation->error_array();
    		$this->load->view('signup',$data); 
@@ -77,8 +92,7 @@ public function dashboard(){
           $password = $formdata['psw'];
           unset($formdata['psw']);
           $formdata['psw'] = md5($password);
-          print_r($formdata['psw']);
-          exit;
+          
            $response=$this->pmodel->register_user($formdata);
           if($response==true){
             
@@ -87,9 +101,12 @@ public function dashboard(){
                  $message = 'Your login Credentials are given below.<br/>';
                 $message .= 'Email: '.$formdata['email'];
                 $message .= '<br/>Password: '.$password;
+                
               // $message .= '<br/> Please follow below link for login.<br/>';
               //   $message .= "<br/>Regards,<br/>Administration of Uflow";
-                send_email_to($formData['email'],$message,'Login Credentials');
+             $sendemail =   send_email_to($formdata['email'],$message,'Login Credentials');
+             print_r($sendemail);
+          exit;
 $data['response'] = true;
             // echo'okk';
             // exit;
@@ -312,9 +329,11 @@ $data['response'] = true;
     $formdata = $this->input->post();
     $email = $formdata['email'];
     $password = $formdata['psw'];
+    $password1 =  md5($password);
+    // $role = $formdata['role'];
     
-     // print_r($password) ;
-     // exit;
+     // print_r($password1) ;
+     
     if(!$this->input->is_ajax_request()) {
         exit('No direct script access allowed');
     }
@@ -326,11 +345,20 @@ $data['response'] = true;
       // $this->load->view('update',$data); 
     }
      else { 
-            $where = "users.email='".$email."' AND users.psw='".$password."'";
+     
+            $where = "users.email='".$email."' AND users.psw='".$password1."'";
       $results = $this->admin->get_where('*', $where, true, '', '1', '');
          if(!empty($results)){
+          print_r($results[0]['role']);
+          
         $data['response'] = true;
+
+        if($results[0]['role'] ==1 ){
+          $data['redirect_url'] = "user_dashboard";
+        }
+        else{
         $data['redirect_url'] = "dashboard";
+      }
         $data['success']  = "updated Successfully!";
         $sessionData = array(
           'admin_email' => $results[0]['email'],

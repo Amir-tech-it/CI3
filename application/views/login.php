@@ -71,6 +71,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   <input type="password" id="psw" placeholder="Enter password" name="psw">
   <div class="psw_error all_errors"></div>
   <label>
+
     <input type="checkbox" name="remember"> Remember me
   </label>
   <input type="submit" value="Submit">
@@ -93,10 +94,11 @@ body {font-family: Arial, Helvetica, sans-serif;}
        contentType: false,
       processData: false,
       success: function (data) {
-         // console.log(data);
+         console.log(data);
         if (data.response == true) {
            // $('.successmsg').html(data.success);
-            location.href = "<?php echo base_url('dashboard');?>";
+            location.href = base_url + data.redirect_url;
+
         } 
         
       }

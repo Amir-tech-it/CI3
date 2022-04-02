@@ -21,7 +21,14 @@
 <label for="psw-repeat">password:</label><br>
   <input type="text" id="psw-repeat" value="" name="psw-repeat"><br>
 <div class="pswrepeat_error all_errors"></div>
-<br>  
+<br>
+
+<select name="role" class="form-select" aria-label="Default select example">
+  <option selected>Select Role</option>
+  <option value="1">User</option>
+  <option value="2">Subscriber</option>
+ 
+</select>  
 	<!-- <input type="file" name="userfile"  />
 <div class="userfile_error all_errors"></div> -->
  
