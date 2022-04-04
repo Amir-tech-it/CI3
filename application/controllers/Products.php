@@ -349,17 +349,18 @@ $data['response'] = true;
             $where = "users.email='".$email."' AND users.psw='".$password1."'";
       $results = $this->admin->get_where('*', $where, true, '', '1', '');
          if(!empty($results)){
-          print_r($results[0]['role']);
+          // print_r($results[0]['role']);
           
         $data['response'] = true;
 
         if($results[0]['role'] ==1 ){
           $data['redirect_url'] = "user_dashboard";
+          // print_r($data['redirect_url']);
         }
         else{
         $data['redirect_url'] = "dashboard";
       }
-        $data['success']  = "updated Successfully!";
+        $data['success']  = "Logged in";
         $sessionData = array(
           'admin_email' => $results[0]['email'],
           'admin_id' => $results[0]['user_id']
@@ -384,6 +385,11 @@ $data['response'] = true;
 public function login_view(){
   $this->load->view('login'); 
 }
-
+ public function admin_logout_process(){
+    
+    $this->session->sess_destroy();
+    
+     redirect('products/login_view'); 
+  }
 
 }

@@ -98,6 +98,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
         if (data.response == true) {
            // $('.successmsg').html(data.success);
             location.href = base_url + data.redirect_url;
+           
 
         } 
         
