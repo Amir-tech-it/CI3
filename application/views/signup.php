@@ -4,6 +4,7 @@
 
 <a href="http://localhost/CI3/products/login_view">login</a><br><br>
 <a href="http://localhost/CI3/products/hopage">View</a><br><br>
+<a href="http://localhost/CI3/products/cart">cart</a><br><br>
 <h2>HTML Forms</h2>
 
 <form method="post" enctype="multipart/form-data" id="sbmt-frm" >

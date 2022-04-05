@@ -5,6 +5,9 @@
 <a href="http://localhost/CI3/products/hopage">Home</a><br><br>
 <a href="http://localhost/CI3/products/view">View</a><br><br>
 
+<a href="http://localhost/CI3/products/cart">cart</a><br><br>
+
+
 <h2>HTML Forms</h2>
 
 <form method="post" action="<?php echo base_url('products/create');?>" enctype="multipart/form-data" id="sbmt-frm" >

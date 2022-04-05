@@ -391,5 +391,8 @@ public function login_view(){
     
      redirect('products/login_view'); 
   }
-
+///// cart functionality
+  public function cart(){
+  $this->load->view('cart/cart'); 
+}
 }
