@@ -102,6 +102,7 @@ input[type="number"] {
         <div class="details">
           <h3>Winter Collection</h3>
           <h2>Men Black Sneakers</h2>
+          <form class="adcfm" id="adcfrm">
           <h4><span class="fa fa-dollar"></span>150</h4>
           <h4 class="dis"><span class="fa fa-dollar"></span>200</h4>
         </div>
@@ -125,18 +126,43 @@ input[type="number"] {
   <input type="number" step="1" max="" value="1" name="quantity" class="quantity-field">
   <input type="button" value="+" class="button-plus" data-field="quantity">
 </div>
+
         <span class="foot"><i class="fa fa-shopping-bag"></i>Buy Now</span>
-        <span class="foot atc"><i class="fa fa-shopping-cart"></i>Add TO Cart</span>
+
+        <input type="submit" value="submit"> 
+        <!-- <span class="foot atc" id="sbmtfrrm"><i class="fa fa-shopping-cart"></i>  Add TO Cart</span> -->
+       </form>
       </div>
     </div>
   </div>
 <!-- partial -->
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
   <script type="text/javascript">
-    var $;
+    
     $( document ).ready(function() {
-    $('.atc').on('click',function(){
-      alert('ok');
+   $(document).on('submit', '#adcfrm', function (e) {
+      e.preventDefault();
+    var formObj = $(this);
+    // $('.all_errors').empty();
+    // $('.direct_access_error').hide();
+    $.ajax({
+      url: "<?php echo base_url("products/cartdata");?>",
+      data: new FormData(this),
+      type: "POST",
+      dataType: "JSON",
+       contentType: false,
+      processData: false,
+      success: function (data) {
+         console.log(data);
+        if (data.response == true) {
+           // $('.successmsg').html(data.success);
+            location.href = base_url + data.redirect_url;
+           
+
+        } 
+        
+      }
+    });
     })
 });
     

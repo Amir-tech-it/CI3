@@ -395,4 +395,14 @@ public function login_view(){
   public function cart(){
   $this->load->view('cart/cart'); 
 }
+
+  public function cartdata(){
+    $data= [];
+    $data['response'] = false;
+    // $data['image_errors'] ="";
+    $formdata = $this->input->post();
+    print_r($formdata);
+    exit;
+}
+
 }
