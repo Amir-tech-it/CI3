@@ -81,7 +81,16 @@ input[type="number"] {
 
   <a href="http://localhost/CI3/products/login_view">login</a><br><br>
 <a href="http://localhost/CI3/products/hopage">View</a><br><br>
-<a href="http://localhost/CI3/products/cart">cart</a><br><br>
+ <?php 
+
+  foreach ($this->cart->contents() as $items): 
+?>
+</td> 
+
+<a href="http://localhost/CI3/products/cart"><?php  print_r ($items['qty']);?>cart</a><br><br>
+<?php
+endforeach;
+?>
 <!-- partial:index.partial.html -->
 <div class="card">
     <div class="left">
@@ -108,17 +117,17 @@ input[type="number"] {
         </div>
         <ul>
           <li>SIZE</li>
-          <li class="bg"><input type="radio" class="size" value="7" >7</li>
-          <li class="bg"><input type="radio" class="size" value="8">8</li>
-          <li class="bg"><input type="radio" class="size" value="9">9</li>
-          <li class="bg"><input type="radio" class="size" value="10">10</li>
-          <li class="bg"><input type="radio" class="size" value="11">11</li>
+          <li class="bg"><input type="radio" name="size" class="size" value="7" >7</li>
+          <li class="bg"><input type="radio" name="size" class="size" value="8">8</li>
+          <li class="bg"><input type="radio" name="size" class="size" value="9">9</li>
+          <li class="bg"><input type="radio" name="size" class="size" value="10">10</li>
+          <li class="bg"><input type="radio" name="size" class="size" value="11">11</li>
         </ul>
         <ul>
           <li>COLOR</li>
-          <li class="yellow"><input type="radio" class="color" value="yellow"></li>
-          <li class="black"><input type="radio" class="color" value="black"></li>
-          <li class="blue"><input type="radio" class="color" value="blue"></li>
+          <li class="yellow"><input type="radio" name="color" class="color" value="yellow"></li>
+          <li class="black"><input type="radio" name="color" class="color" value="black"></li>
+          <li class="blue"><input type="radio" name="color" class="color" value="blue"></li>
         </ul>
 
         <div class="input-group">
@@ -126,6 +135,8 @@ input[type="number"] {
   <input type="number" step="1" max="" value="1" name="quantity" class="quantity-field">
   <input type="button" value="+" class="button-plus" data-field="quantity">
 </div>
+<input type="hidden" name="pro_id" value="2">
+<input type="hidden" name="pro_name" value="shoes">
 
         <span class="foot"><i class="fa fa-shopping-bag"></i>Buy Now</span>
 

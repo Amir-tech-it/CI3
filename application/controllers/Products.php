@@ -9,6 +9,7 @@ public function __construct(){
     $this->load->model('products_model', 'pmodel');
      $this->load->model('admin_model', 'admin');
     $this->load->library('session');
+    $this->load->library('cart');
 
  
   }  
@@ -401,8 +402,33 @@ public function login_view(){
     $data['response'] = false;
     // $data['image_errors'] ="";
     $formdata = $this->input->post();
-    print_r($formdata);
-    exit;
+    $data = array(
+      'id'      => $formdata['pro_id'],
+      'qty'     => $formdata['quantity'],
+      'price'   => 39.95,
+      'name'    => $formdata['pro_name'],
+      'options' => array('Size' => $formdata['size'], 'Color' => $formdata['color'])
+);
+
+
+// print_r($data);
+// exit;
+$this->cart->insert($data);
 }
+
+public function cartview()
+{
+  $this->load->view('showcart'); 
+}
+
+public function updatecart()
+{
+  $formdata = $this->input->post();
+  $this->cart->update($formdata);
+  redirect('products/cart');
+  print_r($formdata);
+exit;
+}
+
 
 }
